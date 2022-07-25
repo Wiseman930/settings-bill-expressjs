@@ -5,10 +5,11 @@ let app = express();
 app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
+app.use(express.static("public")) //makes the public folder visible
 
 //1 default root
 app.get("/", function(req, res){
-  res.render("index"); //to use res.render you need to configure a view engine first so i have to insatll express handlebars and body parser
+  res.render("index");  //to use res.render you need to configure a view engine first so i have to insatll express handlebars and body parser
 });
 
 app.post('/action', function(req, res){
