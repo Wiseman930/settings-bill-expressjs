@@ -1,11 +1,17 @@
-let express = require('express');
-var exphbs  = require('express-handlebars');
-let app = express();
+const express = require('express');
+const exphbs  = require('express-handlebars');
+const bodyParser = require('body-parser'); //import body parser
+const app = express();
 
 app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 app.use(express.static("public")) //makes the public folder visible
+
+app.use(bodyParser.urlencoded({ extended: false })) //line 10 to 13 sets up the body parser
+
+// parse application/json
+app.use(bodyParser.json())
 
 //1 default root
 app.get("/", function(req, res){
@@ -16,7 +22,8 @@ app.post('/action', function(req, res){
 
 })
 app.post('/settings', function(req, res){
-
+    console.log(req.body);
+    res.redirect('/')
 })
 app.get('/actions', function(req, res){
 
