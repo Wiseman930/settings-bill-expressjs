@@ -4,7 +4,7 @@
   "description": "In this document we will explore how to create web applications with [ExpressJS](http://http://expressjs.com/).",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
