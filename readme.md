@@ -1,1 +1,1 @@
-[![pages-build-deployment](https://github.com/Wiseman930/settings-bill-expressjs/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/Wiseman930/settings-bill-expressjs/actions/workflows/pages/pages-build-deployment)
+[![Node.js CI](https://github.com/Wiseman930/settings-bill-expressjs/actions/workflows/node.js.yml/badge.svg)](https://github.com/Wiseman930/settings-bill-expressjs/actions/workflows/node.js.yml)
