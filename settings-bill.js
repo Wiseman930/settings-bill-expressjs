@@ -34,6 +34,7 @@ module.exports = function SettingsBill() {
           cost = callCost;
       }
 
+
       actionList.push({
           type: action,
           cost,
@@ -74,6 +75,7 @@ module.exports = function SettingsBill() {
               total += action.cost;
           }
       }
+
       return total;
 
       // the short way using reduce and arrow functions
@@ -111,6 +113,7 @@ module.exports = function SettingsBill() {
       return total >= criticalLevel;
   }
 
+
   return {
       setSettings,
       getSettings,
@@ -119,7 +122,8 @@ module.exports = function SettingsBill() {
       actionsFor,
       totals,
       hasReachedWarningLevel,
-      hasReachedCriticalLevel
+      hasReachedCriticalLevel,
+
   }
 }
 
