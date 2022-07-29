@@ -4,7 +4,7 @@ const bodyParser = require("body-parser"); //import body parser
 const SettingsBill = require("./settings-bill");// import our factory function
 const app = express();//express ..
 const settingsBill = SettingsBill();//factory function ..
-var moment = require('moment')
+
 
 //var moment = require('moment')
 

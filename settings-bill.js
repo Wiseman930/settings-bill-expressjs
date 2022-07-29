@@ -1,4 +1,4 @@
-const moment = require("moment");
+const timeAgo = require("moment");
 module.exports = function SettingsBill() {
 
   let smsCost;
@@ -36,11 +36,13 @@ module.exports = function SettingsBill() {
       else if (action === 'call'){
           cost = callCost;
       }
+      if(cost && grandTotal() <= criticalLevel){
       actionList.push({
           type: action,
           cost,
-          timestamp: moment(new Date()).fromNow()
+          timestamp: timeAgo(new Date()).fromNow()
       });
+    }
   }
 
   function actions(){
@@ -72,10 +74,9 @@ module.exports = function SettingsBill() {
       for (let index = 0; index < actionList.length; index++) {
           const action = actionList[index];
           // check this is the type we are doing the total for
-          if (action.type === type && grandTotal() <= criticalLevel ) {
+          if (action.type === type) {
               // if it is add the total to the list
               total += action.cost;
-
           }
 
       }
@@ -94,11 +95,12 @@ module.exports = function SettingsBill() {
   function totals() {
       let smsTotal = getTotal('sms').toFixed(2)
       let callTotal = getTotal('call').toFixed(2)
+      let grandTotal = (getTotal('sms') + getTotal('call')).toFixed(2)
 
       return {
           smsTotal,
           callTotal,
-          grandTotal : grandTotal().toFixed(2)
+          grandTotal
       }
   }
 
