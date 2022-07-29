@@ -1,3 +1,4 @@
+const moment = require("moment");
 module.exports = function SettingsBill() {
 
   let smsCost;
@@ -5,13 +6,14 @@ module.exports = function SettingsBill() {
   let warningLevel;
   let criticalLevel;
 
+
   let actionList = [];
 
   function setSettings (settings) {
       smsCost = Number(settings.smsCost);
       callCost = Number(settings.callCost);
-      warningLevel = settings.warningLevel;
-      criticalLevel = settings.criticalLevel;
+      warningLevel = Number(settings.warningLevel);
+      criticalLevel = Number(settings.criticalLevel);
   }
 
   function getSettings
@@ -26,6 +28,7 @@ module.exports = function SettingsBill() {
 
   function recordAction(action) {
 
+
       let cost = 0;
       if (action === 'sms'){
           cost = smsCost;
@@ -33,12 +36,10 @@ module.exports = function SettingsBill() {
       else if (action === 'call'){
           cost = callCost;
       }
-
-
       actionList.push({
           type: action,
           cost,
-          timestamp: new Date()
+          timestamp: moment(new Date()).fromNow()
       });
   }
 
@@ -64,16 +65,19 @@ module.exports = function SettingsBill() {
       // return actionList.filter((action) => action.type === type);
   }
 
+
   function getTotal(type) {
       let total = 0;
       // loop through all the entries in the action list
       for (let index = 0; index < actionList.length; index++) {
           const action = actionList[index];
           // check this is the type we are doing the total for
-          if (action.type === type) {
+          if (action.type === type && grandTotal() <= criticalLevel ) {
               // if it is add the total to the list
               total += action.cost;
+
           }
+
       }
 
       return total;
@@ -86,17 +90,15 @@ module.exports = function SettingsBill() {
       // }, 0);
   }
 
-  function grandTotal() {
-      return getTotal('sms') + getTotal('call');
-  }
-
+  const grandTotal = () => getTotal('sms') + getTotal('call');
   function totals() {
-      let smsTotal = getTotal('sms')
-      let callTotal = getTotal('call')
+      let smsTotal = getTotal('sms').toFixed(2)
+      let callTotal = getTotal('call').toFixed(2)
+
       return {
           smsTotal,
           callTotal,
-          grandTotal : grandTotal()
+          grandTotal : grandTotal().toFixed(2)
       }
   }
 

@@ -1,21 +1,34 @@
 const express = require("express");
-const exphbs = require("express-handlebars");
+const exphbs = require("express-handlebars");//import the express-handlebars module
 const bodyParser = require("body-parser"); //import body parser
-const SettingsBill = require("./settings-bill");
-const app = express();
-const settingsBill = SettingsBill();
+const SettingsBill = require("./settings-bill");// import our factory function
+const app = express();//express ..
+const settingsBill = SettingsBill();//factory function ..
+var moment = require('moment')
 
+//var moment = require('moment')
+
+
+//Configure the express-handlebars
 app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
+//app.engine(ext, callback)
+//The app.engine() function is used to register the given template engine callback as ext
 app.set("view engine", "handlebars");
+//The app.set() function is used to assigns the setting name to value.......app.set(name, value)
+//view engine, the template engine to use
 
-app.use(express.static("public")); //makes the public folder visible
+
+//Middleware functions are functions that have access to the request object ( req ), the response object ( res ), and the next function in the application's
+app.use(express.static("public"));
+//The app.use() function is used to mount the specified middleware function(s) at the path which is being specified........app.use(path, callback)
+//makes the public folder visible
 
 app.use(bodyParser.urlencoded({ extended: false }));
-
 // parse application/json
 app.use(bodyParser.json());
 
 //1 default root
+//The res.render() function is used to render a view and sends the rendered HTML/handlebar string to the client.
 app.get("/", function (req, res) {
   res.render("index", {
     setting: settingsBill.getSettings(),
@@ -44,10 +57,13 @@ app.post("/settings", function (req, res) {
 });
 app.get("/actions", function (req, res) {
   res.render("actions", {actions: settingsBill.actions()});
+
 });
 app.get("/actions/:actionType", function (req, res) {
   const actionType = req.params.actionType
-  res.render("actions", {actions: settingsBill.actionsFor(actionType)})
+  res.render("actions", {
+    actions: settingsBill.actionsFor(actionType)
+  })
 });
 
 let PORT = process.env.PORT || 3011;
