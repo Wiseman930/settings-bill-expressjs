@@ -1,4 +1,5 @@
 const timeAgo = require("moment");
+var chalk = require('chalk');
 module.exports = function SettingsBill() {
 
   let smsCost;
@@ -116,6 +117,20 @@ module.exports = function SettingsBill() {
       const total = grandTotal();
       return total >= criticalLevel;
   }
+  function reachWarning(){
+    if(grandTotal()>= warningLevel && warningLevel < criticalLevel){
+        return 'warning'
+    }
+    else if (grandTotal() >= criticalLevel){
+        return 'danger'
+    }
+  }
+  function reachCritical(){
+    if(grandTotal() >= criticalLevel && warningLevel < criticalLevel){
+        return 'danger'
+    }
+
+  }
 
 
   return {
@@ -127,6 +142,8 @@ module.exports = function SettingsBill() {
       totals,
       hasReachedWarningLevel,
       hasReachedCriticalLevel,
+      reachWarning,
+      reachCritical
 
   }
 }
