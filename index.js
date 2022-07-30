@@ -34,7 +34,6 @@ app.get("/", function (req, res) {
     setting: settingsBill.getSettings(),
     totals: settingsBill.totals(),
     className: settingsBill.reachWarning(),
-    warning: settingsBill.reachCritical()
  // redirect values back to html after reload
   }); //to use res.render you need to configure a view engine first so i have to insatll express handlebars and body parser
 });

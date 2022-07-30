@@ -118,19 +118,15 @@ module.exports = function SettingsBill() {
       return total >= criticalLevel;
   }
   function reachWarning(){
-    if(grandTotal()>= warningLevel && warningLevel < criticalLevel){
+    if(grandTotal()>= warningLevel && grandTotal() < criticalLevel){
         return 'warning'
     }
-    else if (grandTotal() >= criticalLevel){
-        return 'danger'
-    }
-  }
-  function reachCritical(){
-    if(grandTotal() >= criticalLevel && warningLevel < criticalLevel){
+    else if(grandTotal() >= criticalLevel && grandTotal() > warningLevel){
         return 'danger'
     }
 
   }
+
 
 
   return {
@@ -143,7 +139,7 @@ module.exports = function SettingsBill() {
       hasReachedWarningLevel,
       hasReachedCriticalLevel,
       reachWarning,
-      reachCritical
+
 
   }
 }
