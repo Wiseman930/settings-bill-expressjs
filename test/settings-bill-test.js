@@ -43,7 +43,7 @@ describe('settings-bill', function(){
 
         assert.equal(2.35, settingsBill.totals().smsTotal);
         assert.equal(3.35, settingsBill.totals().callTotal);
-        assert.equal(5.70, settingsBill.totals().grandTotal);
+        assert.equal("R" + 5.70, settingsBill.totals().grandTotal);
 
     });
 
@@ -63,7 +63,7 @@ describe('settings-bill', function(){
 
         assert.equal(4.70, settingsBill.totals().smsTotal);
         assert.equal(6.70, settingsBill.totals().callTotal);
-        assert.equal(11.40, settingsBill.totals().grandTotal);
+        assert.equal("R" + 11.40, settingsBill.totals().grandTotal);
 
     });
 

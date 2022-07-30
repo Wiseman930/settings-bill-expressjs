@@ -31,19 +31,19 @@ module.exports = function SettingsBill() {
 
 
       let cost = 0;
-      if (action === 'sms'){
+      if (action === 'sms' &&  grandTotal() <= criticalLevel){
           cost = smsCost;
       }
-      else if (action === 'call'){
+      else if (action === 'call' &&  grandTotal() <= criticalLevel){
           cost = callCost;
       }
-      if(cost && grandTotal() <= criticalLevel){
+
       actionList.push({
           type: action,
           cost,
           timestamp: timeAgo(new Date()).fromNow()
       });
-    }
+
   }
 
   function actions(){
@@ -77,7 +77,7 @@ module.exports = function SettingsBill() {
           // check this is the type we are doing the total for
           if (action.type === type) {
               // if it is add the total to the list
-              total += action.cost; s
+              total += action.cost;
           }
 
       }
@@ -92,16 +92,17 @@ module.exports = function SettingsBill() {
       // }, 0);
   }
 
-  const grandTotal = () => getTotal('sms') + getTotal('call');
+  function grandTotal() {
+    return getTotal('sms') + getTotal('call');
+}
   function totals() {
-      let smsTotal = getTotal('sms').toFixed(2)
-      let callTotal = getTotal('call').toFixed(2)
-      let grandTotal = "R" + (getTotal('sms') + getTotal('call')).toFixed(2)
+      let smsTotal = getTotal('sms')
+      let callTotal = getTotal('call')
 
       return {
           smsTotal,
           callTotal,
-          grandTotal
+          grandTotal: "R" + grandTotal()
       }
   }
 
