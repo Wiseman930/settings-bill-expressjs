@@ -77,7 +77,7 @@ module.exports = function SettingsBill() {
           // check this is the type we are doing the total for
           if (action.type === type) {
               // if it is add the total to the list
-              total += action.cost;
+              total += action.cost; s
           }
 
       }
@@ -96,7 +96,7 @@ module.exports = function SettingsBill() {
   function totals() {
       let smsTotal = getTotal('sms').toFixed(2)
       let callTotal = getTotal('call').toFixed(2)
-      let grandTotal = (getTotal('sms') + getTotal('call')).toFixed(2)
+      let grandTotal = "R" + (getTotal('sms') + getTotal('call')).toFixed(2)
 
       return {
           smsTotal,
