@@ -115,7 +115,7 @@ describe('settings-bill', function(){
         settingsBill.recordAction('call');
         settingsBill.recordAction('sms');
 
-        assert.equal('warning', settingsBill.reachWarning());
+        assert.equal('warning', settingsBill.reachWarningOrCritical());
 
     });
     it('should change the class when the critical level is reached', function(){
@@ -131,7 +131,7 @@ describe('settings-bill', function(){
         settingsBill.recordAction('call');
         settingsBill.recordAction('sms');
 
-        assert.equal('danger', settingsBill.reachWarning());
+        assert.equal('danger', settingsBill.reachWarningOrCritical());
 
     });
     it('should stop making calls or sms when critical level is reached', function(){

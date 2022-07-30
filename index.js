@@ -33,7 +33,7 @@ app.get("/", function (req, res) {
   res.render("index", {
     setting: settingsBill.getSettings(),
     totals: settingsBill.totals(),
-    changeClass: settingsBill.reachWarning(),
+    changeClass: settingsBill.reachWarningOrCritical(),
  // redirect values back to html after reload
   }); //to use res.render you need to configure a view engine first so i have to insatll express handlebars and body parser
 });
