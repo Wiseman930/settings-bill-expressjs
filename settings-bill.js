@@ -96,13 +96,13 @@ module.exports = function SettingsBill() {
     return getTotal('sms') + getTotal('call');
 }
   function totals() {
-      let smsTotal = getTotal('sms')
-      let callTotal = getTotal('call')
+      let smsTotal = getTotal('sms').toFixed(2)
+      let callTotal = getTotal('call').toFixed(2)
 
       return {
           smsTotal,
           callTotal,
-          grandTotal: "R" + grandTotal()
+          grandTotal: "R" + grandTotal().toFixed(2)
       }
   }
 
