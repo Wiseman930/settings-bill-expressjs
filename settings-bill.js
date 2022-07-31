@@ -103,7 +103,7 @@ module.exports = function SettingsBill() {
       return {
           smsTotal,
           callTotal,
-          grandTotal: "R" + grandTotal().toFixed(2)
+          grandTotal: grandTotal().toFixed(2)
       }
   }
 
