@@ -33,17 +33,20 @@ module.exports = function SettingsBill() {
       let cost = 0;
       if (action === 'sms' &&  grandTotal() <= criticalLevel){
           cost = smsCost;
+          actionList.push({
+            type: action,
+            cost,
+            timestamp: timeAgo(new Date()).fromNow()
+        });
       }
       else if (action === 'call' &&  grandTotal() <= criticalLevel){
           cost = callCost;
+          actionList.push({
+            type: action,
+            cost,
+            timestamp: timeAgo(new Date()).fromNow()
+        });
       }
-
-      actionList.push({
-          type: action,
-          cost,
-          timestamp: timeAgo(new Date()).fromNow()
-      });
-
   }
 
   function actions(){
