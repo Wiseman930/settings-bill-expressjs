@@ -64,7 +64,6 @@ module.exports = function SettingsBill() {
       }
 
       return filteredActions;
-
       // return actionList.filter((action) => action.type === type);
   }
 
