@@ -27,6 +27,22 @@ describe('settings-bill', function(){
         settingsBill.recordAction('sms');
         assert.equal(2, settingsBill.actionsFor('sms').length);
     });
+    it('should not be able to record calls or sms when the critical value is reached', function(){
+        settingsBill.setSettings({
+            smsCost: 2,
+            callCost: 3,
+            warningLevel: 5,
+            criticalLevel: 9
+        })
+        settingsBill.recordAction('call');
+        settingsBill.recordAction('sms')
+        settingsBill.recordAction('call')
+        settingsBill.recordAction('sms')
+        settingsBill.recordAction('call')
+        settingsBill.recordAction('sms')
+        assert.equal(2, settingsBill.actionsFor('call').length);
+        assert.equal(2, settingsBill.actionsFor('sms').length);
+    });
 
     it('should be able to set the settings', function(){
         settingsBill.setSettings({
