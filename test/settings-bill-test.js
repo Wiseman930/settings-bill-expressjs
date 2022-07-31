@@ -7,8 +7,41 @@ describe('settings-bill', function(){
     const settingsBill = SettingsBill();
 
     it('should be able to record calls', function(){
+        settingsBill.setSettings({
+            smsCost: 2.35,
+            callCost: 3.35,
+            warningLevel: 30,
+            criticalLevel: 40
+        })
         settingsBill.recordAction('call');
         assert.equal(1, settingsBill.actionsFor('call').length);
+    });
+    it("should be able to record sms", function(){
+        settingsBill.setSettings({
+            smsCost: 2.35,
+            callCost: 3.35,
+            warningLevel: 30,
+            criticalLevel: 40
+        })
+        settingsBill.recordAction('sms');
+        settingsBill.recordAction('sms');
+        assert.equal(2, settingsBill.actionsFor('sms').length);
+    });
+    it('should not be able to record calls or sms when the critical value is reached', function(){
+        settingsBill.setSettings({
+            smsCost: 2,
+            callCost: 3,
+            warningLevel: 5,
+            criticalLevel: 9
+        })
+        settingsBill.recordAction('call');
+        settingsBill.recordAction('sms')
+        settingsBill.recordAction('call')
+        settingsBill.recordAction('sms')
+        settingsBill.recordAction('call')
+        settingsBill.recordAction('sms')
+        assert.equal(2, settingsBill.actionsFor('call').length);
+        assert.equal(2, settingsBill.actionsFor('sms').length);
     });
 
     it('should be able to set the settings', function(){
@@ -43,7 +76,7 @@ describe('settings-bill', function(){
 
         assert.equal(2.35, settingsBill.totals().smsTotal);
         assert.equal(3.35, settingsBill.totals().callTotal);
-        assert.equal(5.70, settingsBill.totals().grandTotal);
+        assert.equal( "R5.70", settingsBill.totals().grandTotal);
 
     });
 
@@ -63,7 +96,7 @@ describe('settings-bill', function(){
 
         assert.equal(4.70, settingsBill.totals().smsTotal);
         assert.equal(6.70, settingsBill.totals().callTotal);
-        assert.equal(11.40, settingsBill.totals().grandTotal);
+        assert.equal("R11.40", settingsBill.totals().grandTotal);
 
     });
 
@@ -96,6 +129,58 @@ describe('settings-bill', function(){
         settingsBill.recordAction('sms');
 
         assert.equal(true, settingsBill.hasReachedCriticalLevel());
+
+    });
+    it('should change the class when the warning level is reached', function(){
+        const settingsBill = SettingsBill();
+        settingsBill.setSettings({
+            smsCost: 2.50,
+            callCost: 5.00,
+            warningLevel: 5,
+            criticalLevel: 10
+        });
+
+        settingsBill.recordAction('call');
+        settingsBill.recordAction('sms');
+
+        assert.equal('warning', settingsBill.reachWarningOrCritical());
+
+    });
+    it('should change the class when the critical level is reached', function(){
+        const settingsBill = SettingsBill();
+        settingsBill.setSettings({
+            smsCost: 2.50,
+            callCost: 5.00,
+            warningLevel: 5,
+            criticalLevel: 10
+        });
+
+        settingsBill.recordAction('call');
+        settingsBill.recordAction('call');
+        settingsBill.recordAction('sms');
+
+        assert.equal('danger', settingsBill.reachWarningOrCritical());
+
+    });
+    it('should stop making calls or sms when critical level is reached', function(){
+        const settingsBill = SettingsBill();
+        settingsBill.setSettings({
+            smsCost: 2.00,
+            callCost: 3.00,
+            warningLevel: 5,
+            criticalLevel: 9
+        });
+
+        settingsBill.recordAction('call');
+        settingsBill.recordAction('sms');
+        settingsBill.recordAction('call');
+        settingsBill.recordAction('call');
+        settingsBill.recordAction('call');// R11.00  is reached here, and no more calls or sms are added in the grandTotal
+        settingsBill.recordAction('sms');
+        settingsBill.recordAction('sms');
+        settingsBill.recordAction('sms');
+
+        assert.equal("R11.00", settingsBill.totals().grandTotal);
 
     });
 });
