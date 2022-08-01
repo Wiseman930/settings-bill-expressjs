@@ -162,7 +162,7 @@ describe('settings-bill', function(){
         assert.equal('danger', settingsBill.reachWarningOrCritical());
 
     });
-    it('grandTotal does not go up when the critical level is reached', function(){
+    it('grandTotal, smsTotal and CallTotal does not go up when the critical level is reached', function(){
         const settingsBill = SettingsBill();
         settingsBill.setSettings({
             smsCost: 2.00,
@@ -181,6 +181,8 @@ describe('settings-bill', function(){
         settingsBill.recordAction('sms');
 
         assert.equal(11.00, settingsBill.totals().grandTotal);
+        assert.equal(2.00, settingsBill.totals().smsTotal);
+        assert.equal(9.00, settingsBill.totals().callTotal)
 
     });
 });
