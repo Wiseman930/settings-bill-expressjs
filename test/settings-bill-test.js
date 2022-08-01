@@ -184,5 +184,6 @@ describe('settings-bill', function(){
         assert.equal(2.00, settingsBill.totals().smsTotal);
         assert.equal(9.00, settingsBill.totals().callTotal)
 
+        
     });
 });
