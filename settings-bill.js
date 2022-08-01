@@ -126,10 +126,7 @@ module.exports = function SettingsBill() {
     else if(grandTotal() >= criticalLevel && grandTotal() > warningLevel){
         return 'danger'
     }
-
   }
-
-
 
   return {
       setSettings,
