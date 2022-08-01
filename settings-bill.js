@@ -1,4 +1,4 @@
-const timeAgo = require("moment");
+
 module.exports = function SettingsBill() {
 
   let smsCost;
@@ -34,22 +34,27 @@ module.exports = function SettingsBill() {
           cost = smsCost;
           actionList.push({
             type: action,
-            cost,
-            timestamp: timeAgo(new Date()).fromNow()
+                    cost,
+                    timestamp: new Date(),
+                    timeFromNow: ''
+
         });
       }
       else if (action === 'call' &&  grandTotal() <= criticalLevel){
           cost = callCost;
           actionList.push({
             type: action,
-            cost,
-            timestamp: timeAgo(new Date()).fromNow()
+                    cost,
+                    timestamp: new Date(),
+                    timeFromNow: ''
+
         });
       }
   }
 
   function actions(){
       return actionList;
+
   }
 
   function actionsFor(type){
@@ -103,7 +108,7 @@ module.exports = function SettingsBill() {
       return {
           smsTotal,
           callTotal,
-          grandTotal: "R" + grandTotal().toFixed(2)
+          grandTotal: grandTotal().toFixed(2)
       }
   }
 
@@ -126,10 +131,7 @@ module.exports = function SettingsBill() {
     else if(grandTotal() >= criticalLevel && grandTotal() > warningLevel){
         return 'danger'
     }
-
   }
-
-
 
   return {
       setSettings,

@@ -76,7 +76,7 @@ describe('settings-bill', function(){
 
         assert.equal(2.35, settingsBill.totals().smsTotal);
         assert.equal(3.35, settingsBill.totals().callTotal);
-        assert.equal( "R5.70", settingsBill.totals().grandTotal);
+        assert.equal( 5.70, settingsBill.totals().grandTotal);
 
     });
 
@@ -96,7 +96,7 @@ describe('settings-bill', function(){
 
         assert.equal(4.70, settingsBill.totals().smsTotal);
         assert.equal(6.70, settingsBill.totals().callTotal);
-        assert.equal("R11.40", settingsBill.totals().grandTotal);
+        assert.equal(11.40, settingsBill.totals().grandTotal);
 
     });
 
@@ -162,7 +162,7 @@ describe('settings-bill', function(){
         assert.equal('danger', settingsBill.reachWarningOrCritical());
 
     });
-    it('should stop making calls or sms when critical level is reached', function(){
+    it('grandTotal, smsTotal and CallTotal does not go up when the critical level is reached', function(){
         const settingsBill = SettingsBill();
         settingsBill.setSettings({
             smsCost: 2.00,
@@ -180,7 +180,10 @@ describe('settings-bill', function(){
         settingsBill.recordAction('sms');
         settingsBill.recordAction('sms');
 
-        assert.equal("R11.00", settingsBill.totals().grandTotal);
+        assert.equal(11.00, settingsBill.totals().grandTotal);
+        assert.equal(2.00, settingsBill.totals().smsTotal);
+        assert.equal(9.00, settingsBill.totals().callTotal)
 
+        
     });
 });
