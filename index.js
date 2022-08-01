@@ -4,6 +4,8 @@ const bodyParser = require("body-parser"); //import body parser
 const SettingsBill = require("./settings-bill");// import our factory function
 const app = express();//express ..
 const settingsBill = SettingsBill();//factory function ..
+const moment = require("moment");
+
 
 
 //var moment = require('moment')
@@ -39,7 +41,6 @@ app.get("/", function (req, res) {
 });
 
 app.post("/action", function (req, res) {
-  console.log(req.body.actionType);
 
   settingsBill.recordAction(req.body.actionType);
 
@@ -52,19 +53,31 @@ app.post("/settings", function (req, res) {
     warningLevel: req.body.warningLevel,
     criticalLevel: req.body.criticalLevel,
   });
-  console.log(settingsBill.getSettings());
 
   res.redirect("/");
 });
 app.get("/actions", function (req, res) {
-  res.render("actions", {actions: settingsBill.actions()});
+
+
+  let myaction = settingsBill.actions()
+
+for(let key of myaction){
+  key.timeFromNow = moment(key.timestamp).fromNow()
+}
+
+res.render('actions', {actions: myaction });
 
 });
+
 app.get("/actions/:actionType", function (req, res) {
-  const actionType = req.params.actionType
-  res.render("actions", {
-    actions: settingsBill.actionsFor(actionType)
-  })
+
+const actionType = req.params.actionType;
+let myActions = settingsBill.actionsFor(actionType)
+
+for(let key of myActions){
+  key.timeFromNow = moment(key.timestamp).fromNow()
+}
+  res.render('actions', {actions: myActions});
 });
 
 let PORT = process.env.PORT || 3011;

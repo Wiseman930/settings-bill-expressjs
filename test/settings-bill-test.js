@@ -162,7 +162,7 @@ describe('settings-bill', function(){
         assert.equal('danger', settingsBill.reachWarningOrCritical());
 
     });
-    it('should stop making calls or sms when critical level is reached', function(){
+    it('grandTotal does not go up when the critical level is reached', function(){
         const settingsBill = SettingsBill();
         settingsBill.setSettings({
             smsCost: 2.00,
